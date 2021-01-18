@@ -12,18 +12,19 @@ object RetrofitInstance {
     // lazy read-only property
     private val retrofit by lazy {
         val httpBuilder = OkHttpClient.Builder()
+
         val certificatePinner = CertificatePinner.Builder()
                 .add("blockchain.info", "sha256/Z87j23nY+/WSTtsgE/O4ZcDVhevBohFPgPMU6rV2iSw=")
                 .build()
 
-        val okHttpClient : OkHttpClient = httpBuilder
+        val okHttpClient = OkHttpClient.Builder()
                 .certificatePinner(certificatePinner)
                 .build()
 
         Retrofit.Builder()
                 .baseUrl(BTC_URL)
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient )
+                .client(okHttpClient)
                 .build()
     }
 
